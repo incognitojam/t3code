@@ -415,13 +415,14 @@ type PullRequestDetailPanelProps = {
 };
 
 /**
- * A `#123` in any body below opens as a tab beside this panel rather than replacing the page.
+ * A pull request link in any body below opens as a tab beside the thread hosting this panel.
  * Told through a context rather than a prop threaded down through the tabs, and provided out here
  * so the panel body below is untouched.
  */
 export function PullRequestDetailPanel(props: PullRequestDetailPanelProps) {
-  // Only where there is a thread to open beside: a draft target names no thread yet.
-  const target = props.context === "thread" ? props.composerDraftTarget : undefined;
+  // Any PR tab beside a thread keeps links there, including another branch's PR whose
+  // checkout controls use page context. A draft target names no thread yet.
+  const target = props.composerDraftTarget;
   const threadRef =
     target !== undefined && typeof target === "object" && "threadId" in target ? target : undefined;
   return (
